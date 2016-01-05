@@ -167,6 +167,8 @@ class InventoryPlugin(PluginBase):
         self.event.emit('inventory_held_item_change', packet.data)
 
     def handle_open_window(self, event, packet):
+        if packet.data['inv_type'] == 'minecraft:container':
+            packet.data['inv_type'] = 'minecraft:chest'
         inv_type = windows.inv_types[packet.data['inv_type']]
         self.inventory.window = inv_type(
             persistent_slots=self.inventory.window.slots, **packet.data)
